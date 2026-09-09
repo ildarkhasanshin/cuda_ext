@@ -504,8 +504,6 @@ class SCBs:
        
     @staticmethod
     def expand_sel_paragraph():
-        ed = app.Editor(0)
-
         carets = ed.get_carets()
         if not carets:
             return
@@ -516,14 +514,14 @@ class SCBs:
         start_y = y
         while start_y > 0:
             prev_line = ed.get_text_line(start_y - 1)
-            if prev_line is None or prev_line.strip() == '':
+            if not prev_line or prev_line.isspace():
                 break
             start_y -= 1
 
         end_y = y
         while end_y < total_lines - 1:
             next_line = ed.get_text_line(end_y + 1)
-            if next_line is None or next_line.strip() == '':
+            if not next_line or next_line.isspace():
                 break
             end_y += 1
 
