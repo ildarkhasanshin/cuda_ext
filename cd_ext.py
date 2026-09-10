@@ -532,7 +532,7 @@ class SCBs:
             return
 
         start_x = 0
-        end_x = len(last_line.encode('utf-8'))
+        end_x = ed.get_line_len(end_y)
 
         ed.set_caret(start_x, start_y, end_x, end_y)
     #def expand_sel_paragraph   
