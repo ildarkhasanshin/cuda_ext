@@ -468,23 +468,26 @@ def duplicate_tab():
    #def duplicate_tab
 
 def get_handles_index():
-    handles = []
-    for h in app.ed_handles():
-        handles.append(app.Editor(h).get_prop(app.PROP_HANDLE_SELF, ''))
-    current_handle = ed.get_prop(app.PROP_HANDLE_SELF, '')
+    hlist = app.ed_handles()
+    hlist = [app.Editor(h).get_prop(app.PROP_HANDLE_SELF) for h in hlist]
+    cur_h = ed.get_prop(app.PROP_HANDLE_SELF, '')
     try:
-        return handles, handles.index(current_handle)
+        return hlist, hlist.index(cur_h)
     except ValueError:
         return
-        
+
 def close_tabs_left():
-    handles, index = get_handles_index()
-    for h in handles[:index]:
-        app.Editor(h).cmd(cmds.cmd_FileClose)
+    get_h = get_handles_index()
+    if get_h is not None:
+        handles, index = get_h
+        for h in handles[:index]:
+            app.Editor(h).cmd(cmds.cmd_FileClose)
    #def close_tabs_left
 
 def close_tabs_right():
-    handles, index = get_handles_index()
-    for h in handles[index + 1:]:
-        app.Editor(h).cmd(cmds.cmd_FileClose)
+    get_h = get_handles_index()
+    if get_h is not None:
+        handles, index = get_h
+        for h in handles[index + 1:]:
+            app.Editor(h).cmd(cmds.cmd_FileClose)
    #def close_tabs_right
